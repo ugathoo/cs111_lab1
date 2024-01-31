@@ -13,13 +13,13 @@ int main(int argc, char *argv[])
 	//check for valid arg length
 	if(argc == 1){
 		printf("invalid number of arguments\n");
-		return errno.EINVAL;
+		return errno;
 	}
 	//one program only edge case
 	else if(argc == 2){
 		//check for valid second argument
 		if(execlp(argv[1], argv[1], NULL) == -1){
-			return errno.EINVAL;
+			return errno;
 		}
 	}
 	
