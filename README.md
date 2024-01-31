@@ -1,8 +1,8 @@
-## UID: 123456789
+## UID: 405695663
 
 ## Pipe Up
 
-One sentence description
+Emulate the pipe operator (|) with this C program.
 
 ## Building
 
