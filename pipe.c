@@ -63,9 +63,7 @@ int main(int argc, char * argv[]) {
  	} else {
  		int pipefd[2];
  		int pipectr = argc - 2;
- 		/*if (pipe(pipefd) == -1) {
- 			printf("error pipe\n");
- 		}*/
+ 		
  		for (int i = 0; i < pipectr; i+=1) {
  			int pipefd[2];
 			if (pipe(pipefd) == -1) {
@@ -85,28 +83,13 @@ int main(int argc, char * argv[]) {
 					printf("2 args error\n");
 					return errno;
 				}
-			} /*else {
-				printf("parent process only 2 args\n");
-				int ret2 = fork();
-				if (ret2 == -1)
-					printf("error forking");
-				else if (ret2 == 0) {
-					printf("parent child process only 2 args\n");
-					dup2(pipefd[0], STDIN_FILENO);
-					close(pipefd[0]);
-					int idd = i+2;
-					if (execlp(argv[idd], argv[idd], NULL) == -1) {
-						printf("2 args error\n");
-						return errno;
-					}
-				} 
+			} else {
 				printf("parent process only 2 args\n");
 				int status = 0;
 				int pid = ret;
 				waitpid(pid, &status, 0);
 				printf("%d\n", WEXITSTATUS(status));
-				
-			}*/
+			}
 			
  		}
  	}
