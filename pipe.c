@@ -84,7 +84,7 @@ int main(int argc, char * argv[]) {
 					return errno;
 				}
 			} else {
-				printf("%s\n",argv[i]);
+				printf("%s\n",argv[i+1]);
 				int status = 0;
 				int pid = ret;
 				waitpid(pid, &status, 0);
