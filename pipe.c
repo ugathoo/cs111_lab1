@@ -79,6 +79,7 @@ int main(int argc, char * argv[]) {
 			} else if (ret == 0) {
 				printf("child process\n");
 				dup2(pipefd[1], STDOUT_FILENO); //write to pipefd[1], read from STDOUT_FILENO
+				close(pipefd[1]);
 				printf("duped\n");
 				int id = i+1;
 				if (execlp(argv[id], argv[id], NULL) == -1) {
