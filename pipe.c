@@ -76,22 +76,27 @@ int main(int argc, char *argv[])
 		for(int p = 0; p < pipectr; p++){
 			int ret = fork();
 			if(ret < 0){
+				printf("error forking");
 				return errno;
 			}
 			else if(ret == 0){
 				dup2(pipefd[1], STDOUT_FILENO);
 				if(execlp(argv[p+1], argv[p+1], NULL) == -1){
+					printf("error executing");
 					return errno;
 				}
 			}
 			else {
 				int ret2 = fork();
-				if (ret2 < 0)
+				if (ret2 < 0){
 					printf("error forking");
+					return errno;
+				}
 				else if (ret2 == 0) {
-					//printf("we are in the parent child process\n");
+					printf("we are in the parent child process\n");
 					dup2(pipefd[0], STDIN_FILENO);
 					if (execlp(argv[p + 2], argv[p + 2], NULL) == -1) {
+						printf("error executing");
 						return errno;
 					}
 				}
