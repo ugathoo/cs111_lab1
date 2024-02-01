@@ -63,14 +63,14 @@ int main(int argc, char * argv[]) {
  	} else {
  		int pipefd[2];
  		int pipectr = argc - 2;
- 		
+ 		int ret;
  		for (int i = 0; i < pipectr; i+=1) {
  			//int pipefd[2];
 			if (pipe(pipefd) == -1) {
 				printf("error pipe\n");
 				return errno;
 			}
-			int ret = fork();
+			ret = fork();
 			if (ret < 0) {
 				printf("error forking\n");
 				return errno;
@@ -85,7 +85,7 @@ int main(int argc, char * argv[]) {
  		}
 
 		//last arg
-		int ret = fork();
+		ret = fork();
 		if (ret < 0) {
 			printf("error forking\n");
 			return errno;
