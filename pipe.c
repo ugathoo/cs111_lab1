@@ -63,7 +63,6 @@ int main(int argc, char * argv[]) {
  	} else {
  		int pipefd[2];
  		int pipectr = argc - 2;
- 		int ret = 0;
 		
 		printf("before loop\n");
  		for (int i = 0; i < pipectr; i+=1) {
@@ -72,7 +71,7 @@ int main(int argc, char * argv[]) {
 				printf("error pipe\n");
 				return errno;
 			}
-			ret = fork();
+			int ret = fork();
 			printf("forked\n");
 			if (ret < 0) {
 				printf("error forking\n");
@@ -100,23 +99,27 @@ int main(int argc, char * argv[]) {
  		}
 
 		//last arg
-		ret = fork();
+		int ret = fork();
+		printf("hit last arg\n")
 		if (ret < 0) {
 			printf("error forking\n");
 			return errno;
 		} else if (ret == 0) {
-			//dup2(pipefd[0], STDIN_FILENO);
+			dup2(pipefd[0], STDIN_FILENO);
+			printf("duped last arg\n");
 			close(pipefd[1]);
 			if (execlp(argv[argc-1], argv[argc-1], NULL) == -1) {
 				printf("2 args error\n");
 				return errno;
 			}
+			printf("exited last arg else if\n");
 		} 
 		else {
 			close(pipefd[0]);
 			int status = 0;
 			int pid = ret;
 			waitpid(pid, &status, 0);
+			printf("cleared wait last arg\n");
 			//printf("%d\n", WEXITSTATUS(status));
 			
 		}
