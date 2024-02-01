@@ -63,15 +63,15 @@ int main(int argc, char * argv[]) {
  	} else {
  		int pipefd[2];
  		int pipectr = argc - 2;
- 		int ret;
+ 		int ret = 0;
+		if (pipe(pipefd) == -1) {
+				printf("error pipe\n");
+				return errno;
+		}
 		printf("before loop");
  		for (int i = 0; i < pipectr; i+=1) {
 			printf("temp");
- 			//int pipefd[2];
-			if (pipe(pipefd) == -1) {
-				printf("error pipe\n");
-				return errno;
-			}
+			
 			ret = fork();
 			if (ret < 0) {
 				printf("error forking\n");
