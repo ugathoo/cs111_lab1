@@ -73,6 +73,8 @@ int main(int argc, char * argv[]) {
 				return errno;
 			} else if (ret == 0) {
 				dup2(pipefd[1], STDOUT_FILENO); //write to pipefd[1], read from STDOUT_FILENO
+				close(pipefd[0]);
+				close(pipefd[1]);
 				int id = i+1;
 				if (execlp(argv[id], argv[id], NULL) == -1) {
 					printf("2 args error\n");
@@ -86,6 +88,7 @@ int main(int argc, char * argv[]) {
 				else if (ret2 == 0) {
 					printf("parent child process only 2 args\n");
 					dup2(pipefd[0], STDIN_FILENO);
+					close(pipefd[0]);
 					int idd = i+2;
 					if (execlp(argv[idd], argv[idd], NULL) == -1) {
 						printf("2 args error\n");
@@ -93,6 +96,7 @@ int main(int argc, char * argv[]) {
 					}
 				} else {
 					printf("parent process only 2 args\n");
+					close(pipefd[0]);
 				}
 			}
  		}
