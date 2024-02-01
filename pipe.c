@@ -79,7 +79,7 @@ int main(int argc, char * argv[]) {
 			} else if (ret == 0) {
 				printf("child process\n");
 				dup2(pipefd[1], STDOUT_FILENO); //write to pipefd[1], read from STDOUT_FILENO
-				close(pipefd[0]);
+				//close(pipefd[0]);
 				printf("duped\n");
 				int id = i+1;
 				if (execlp(argv[id], argv[id], NULL) == -1) {
@@ -88,7 +88,7 @@ int main(int argc, char * argv[]) {
 				}
 				printf("exited\n");
 			} else {
-				int status = 0;
+				/*int status = 0;
 				int pid = ret;
 				waitpid(pid, &status, 0);
 				printf("cleared wait\n");
@@ -96,7 +96,7 @@ int main(int argc, char * argv[]) {
 				printf("cleared status print\n");
 				dup2(pipefd[0], STDIN_FILENO);
 				printf("hit after dup2\n");
-				//close(pipefd[0]);
+				//close(pipefd[0]);*/
 			}
  		}
 
