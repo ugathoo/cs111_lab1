@@ -64,6 +64,7 @@ int main(int argc, char * argv[]) {
  		int pipefd[2];
  		int pipectr = argc - 2;
  		int ret;
+		printf("before loop");
  		for (int i = 0; i < pipectr; i+=1) {
 			printf("temp");
  			//int pipefd[2];
@@ -101,7 +102,7 @@ int main(int argc, char * argv[]) {
 			printf("error forking\n");
 			return errno;
 		} else if (ret == 0) {
-			dup2(pipefd[0], STDIN_FILENO);
+			//dup2(pipefd[0], STDIN_FILENO);
 			close(pipefd[1]);
 			if (execlp(argv[argc-1], argv[argc-1], NULL) == -1) {
 				printf("2 args error\n");
