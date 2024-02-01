@@ -102,7 +102,7 @@ int main(int argc, char * argv[]) {
 			}
 			int status = 0;
 			int pid = ret;
-			wait(pid, &status, 0);
+			waitpid(pid, &status, 0);
 			printf("%d\n", WEXITSTATUS(status));
  		}
  	}
