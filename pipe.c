@@ -95,10 +95,6 @@ int main(int argc, char *argv[])
 						return errno;
 					}
 				}
-				else{
-					close(pipefd[0]);
-					close(pipefd[1]);
-				}
 			}
 
 		}
