@@ -109,7 +109,7 @@ int main(int argc, char * argv[]) {
 		} else if (ret == 0) {
 			dup2(pipefd[0], STDIN_FILENO);
 			printf("duped last arg\n");
-			close(pipefd[1]);
+			//close(pipefd[1]);
 			if (execlp(argv[argc-1], argv[argc-1], NULL) == -1) {
 				printf("2 args error\n");
 				return errno;
