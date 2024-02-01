@@ -76,7 +76,7 @@ int main(int argc, char * argv[]) {
 			if (ret < 0) {
 				printf("error forking\n");
 				return errno;
-			} else if (ret >= 0) {
+			} else if (ret == 0) {
 				dup2(pipefd[1], STDOUT_FILENO); //write to pipefd[1], read from STDOUT_FILENO
 				printf("duped\n");
 				int id = i+1;
@@ -100,7 +100,7 @@ int main(int argc, char * argv[]) {
 
 		//last arg
 		int ret = fork();
-		printf("hit last arg\n")
+		printf("hit last arg\n");
 		if (ret < 0) {
 			printf("error forking\n");
 			return errno;
