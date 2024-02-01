@@ -66,7 +66,6 @@ int main(int argc, char *argv[])
 	//more than two programs 
 	else{
 		int pipefd[2];
-		int reps = argc - 1;
 		int pipectr = argc - 2;
 		
 		//successful pipe?
@@ -88,7 +87,7 @@ int main(int argc, char *argv[])
 				}
 			}
 			else{
-				close(pipefd[0])
+				close(pipefd[0]);
 			}
 		}
 	}
