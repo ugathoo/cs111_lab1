@@ -81,7 +81,6 @@ int main(int argc, char * argv[]) {
 				}
 			} else {
 				printf("parent process only 2 args\n");
-				close(pipefd[1]);
 				int ret2 = fork();
 				if (ret2 == -1)
 					printf("error forking");
