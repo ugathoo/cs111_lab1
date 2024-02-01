@@ -57,12 +57,13 @@ int main(int argc, char * argv[]) {
 	//more than 3 args
  	} else {
  		int pipefd[2];
- 		int numPipes = argc - 2;
+ 		int pipectr = argc - 2;
  		if (pipe(pipefd) == -1) {
  			printf("error pipe\n");
  		}
- 		for (int i = 0; i < numPipes; i++) {
- 			int ret = fork();
+ 		for (int i = 0; i < piprctr; i++) {
+ 			
+			int ret = fork();
  			if (ret < 0) {
  				printf("error forking\n");
  				return errno;
@@ -80,10 +81,10 @@ int main(int argc, char * argv[]) {
  				else if (ret2 == 0) {
  					printf("parent child process 2+ args\n");
  					dup2(pipefd[0], STDIN_FILENO);
- 					if (execlp(argv[i + 2], argv[i + 2], NULL) == -1) {
+ 					/*if (execlp(argv[i + 2], argv[i + 2], NULL) == -1) {
  						printf("2+ args error\n");
  						return errno;
- 					}
+ 					}*/
  				} else {
  					printf("parent process 2+ args\n");
  				}
