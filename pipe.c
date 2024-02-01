@@ -47,11 +47,15 @@ int main(int argc, char * argv[]) {
  				dup2(pipefd[0], STDIN_FILENO);
  				close(pipefd[0]);
 				if (execlp(argv[2], argv[2], NULL) == -1) {
-					printf("2 args error\n");
+					//printf("2 args error\n");
 					return errno;
 				}
 			} else {
  				//printf("parent process only 2 args\n");
+				int status = 0;
+				int pid = ret2;
+				waitpid(pid, &status, 0);
+				printf("%d\n", WEXITSTATUS(status));
  				close(pipefd[0]);
  			}
  		}
