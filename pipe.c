@@ -82,13 +82,13 @@ int main(int argc, char * argv[]) {
 					return errno;
 				}
 			} else {
-				dup2(pipefd[0], STDIN_FILENO);
-				close(pipefd[0]);
+				
 				int status = 0;
 				int pid = ret;
 				waitpid(pid, &status, 0);
 				printf("%d\n", WEXITSTATUS(status));
-			
+				dup2(pipefd[0], STDIN_FILENO);
+				//close(pipefd[0]);
 			}
  		}
 
