@@ -90,6 +90,7 @@ int main(int argc, char *argv[])
 				}
 			}
 			else {
+				close(pipefd[1]);
 				int ret2 = fork();
 				if (ret2 < 0){
 					printf("error forking");
@@ -98,6 +99,7 @@ int main(int argc, char *argv[])
 				else if (ret2 == 0) {
 					printf("we are in the parent child process\n");
 					dup2(pipefd[0], STDIN_FILENO);
+					close(pipefd[0]);
 					if (execlp(argv[p + 2], argv[p + 2], NULL) == -1) {
 						printf("error executing");
 						return errno;
