@@ -83,10 +83,12 @@ int main(int argc, char * argv[]) {
 					return errno;
 				}
 			} else {
-				
 				int status = 0;
 				int pid = ret;
 				waitpid(pid, &status, 0);
+				printf("before wait");
+				//printf("%d\n", WEXITSTATUS(status));
+				printf("clear status");
 				dup2(pipefd[0], STDIN_FILENO);
 				printf("hit");
 				//close(pipefd[0]);
