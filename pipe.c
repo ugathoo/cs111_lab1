@@ -9,7 +9,7 @@
 int main(int argc, char * argv[]) {
  	if (argc == 1) {
  		printf("invalid number of args\n");
- 		return errno.EINVAL;
+ 		return errno;
 	//only 1 arg
  	} else if (argc == 2) {
  		if (execlp(argv[1], argv[1], NULL) == -1) {
