@@ -62,7 +62,7 @@ int main(int argc, char * argv[]) {
  		if (pipe(pipefd) == -1) {
  			printf("error pipe\n");
  		}
- 		for (int i = 0; i < pipectr; i++) {
+ 		for (int i = 0; i < pipectr; i+=2) {
  			int pipefd[2];
 			if (pipe(pipefd) == -1) {
 				printf("error pipe\n");
