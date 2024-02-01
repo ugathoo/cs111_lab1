@@ -87,6 +87,7 @@ int main(int argc, char * argv[]) {
 				printf("%s\n",argv[i+1]);
 				int status = 0;
 				int pid = ret;
+				close(pipefd[0]);
 				waitpid(pid, &status, 0);
 				printf("%d\n", WEXITSTATUS(status));
 			}
