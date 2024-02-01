@@ -41,6 +41,7 @@ int main(int argc, char * argv[]) {
  			int ret2 = fork();
  			if (ret2 == -1)
  				//printf("error forking");
+				return errno;
  			else if (ret2 == 0) {
  				//printf("parent child process only 2 args\n");
  				dup2(pipefd[0], STDIN_FILENO);
