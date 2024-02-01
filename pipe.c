@@ -88,7 +88,6 @@ int main(int argc, char * argv[]) {
 				else if (ret2 == 0) {
 					printf("parent child process only 2 args\n");
 					dup2(pipefd[0], STDIN_FILENO);
-					close(pipefd[0]);
 					if (execlp(argv[2], argv[1], NULL) == -1) {
 						printf("2 args error\n");
 						return errno;
