@@ -81,7 +81,14 @@ int main(int argc, char * argv[]) {
 					printf("2 args error\n");
 					return errno;
 				}
-			} 
+			} else {
+				close(pipefd[0]);
+				int status = 0;
+				int pid = ret;
+				waitpid(pid, &status, 0);
+				printf("%d\n", WEXITSTATUS(status));
+			
+			}
  		}
 
 		//last arg
@@ -96,7 +103,8 @@ int main(int argc, char * argv[]) {
 				printf("2 args error\n");
 				return errno;
 			}
-		} else {
+		} 
+		else {
 			close(pipefd[0]);
 			int status = 0;
 			int pid = ret;
