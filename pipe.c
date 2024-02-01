@@ -77,6 +77,7 @@ int main(int argc, char * argv[]) {
 				printf("error forking\n");
 				return errno;
 			} else if (ret == 0) {
+				printf("child process\n");
 				dup2(pipefd[1], STDOUT_FILENO); //write to pipefd[1], read from STDOUT_FILENO
 				printf("duped\n");
 				int id = i+1;
