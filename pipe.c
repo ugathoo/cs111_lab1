@@ -98,8 +98,6 @@ int main(int argc, char *argv[])
 				else{
 					close(pipefd[0]);
 					close(pipefd[1]);
-					wait(NULL);
-					wait(NULL);
 				}
 			}
 
