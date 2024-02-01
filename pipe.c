@@ -84,14 +84,14 @@ int main(int argc, char *argv[])
 					return errno;
 				}
 			}
-			else{
+			else {
 				int ret2 = fork();
-				if(ret2 < 0){
-					return errno;
-				}
-				else if(ret2 == 0){
+				if (ret2 < 0)
+					printf("error forking");
+				else if (ret2 == 0) {
+					//printf("we are in the parent child process\n");
 					dup2(pipefd[0], STDIN_FILENO);
-					if(execlp(argv[p+2], argv[p+2], NULL) == -1){
+					if (execlp(argv[p + 2], argv[p + 2], NULL) == -1) {
 						return errno;
 					}
 				}
