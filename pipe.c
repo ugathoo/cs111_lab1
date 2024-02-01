@@ -7,7 +7,6 @@
 #include <sys/wait.h>
 
 int main(int argc, char * argv[]) {
-	printf(argv[0]);
  	if (argc == 1) {
  		printf("invalid number of args\n");
  		exit(EINVAL);
@@ -87,7 +86,8 @@ int main(int argc, char * argv[]) {
 				else if (ret2 == 0) {
 					printf("parent child process only 2 args\n");
 					dup2(pipefd[0], STDIN_FILENO);
-					if (execlp(argv[2], argv[2], NULL) == -1) {
+					int idd = i+2;
+					if (execlp(argv[idd], argv[idd], NULL) == -1) {
 						printf("2 args error\n");
 						return errno;
 					}
