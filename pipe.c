@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[])
 {
-	int pipefd[2];
+	//int pipefd[2]; this isn't python this isn't needed 
 
 	//check for valid arg length
 	if(argc == 1){
@@ -63,8 +63,36 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
+	//more than two programs 
+	else{
+		int pipefd[2];
+		int reps = argc - 1;
+		int pipectr = argc - 2;
+		
+		//successful pipe?
+		if(pipe(pipefd) == -1){
+			return errno;
+		}
+		//loop through args in order
+		for(int p = 0; p < pipectr; p++){
+			int ret = fork();
+			if(ret < 0){
+				return errno;
+			}
+			else if(ret == 0){
+				dup2(pipefd[1], STDOUT_FILENO);
+				close(pipefd[0]);
+				close(pipefd[1]);
+				if(execlp(argv[p+1], argv[p+1], NULL) == -1){
+					return errno;
+				}
+			}
+			else{
+				close(pipefd[0])
+			}
+		}
+	}
 	
 
-	// TODO: it's all yours
 	return 0;
 }
