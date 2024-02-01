@@ -7,7 +7,7 @@
 #include <sys/wait.h>
 
 int main(int argc, char * argv[]) {
-	printf(argv);
+	printf(argv[0]);
  	if (argc == 1) {
  		printf("invalid number of args\n");
  		exit(EINVAL);
