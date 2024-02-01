@@ -84,11 +84,11 @@ int main(int argc, char * argv[]) {
 					return errno;
 				}
 			} else {
-				/*printf("%s\n",argv[i]);
+				printf("%s\n",argv[i]);
 				int status = 0;
 				int pid = ret;
 				waitpid(pid, &status, 0);
-				printf("%d\n", WEXITSTATUS(status));*/
+				printf("%d\n", WEXITSTATUS(status));
 			}
 			
  		}
