@@ -95,7 +95,6 @@ int main(int argc, char * argv[]) {
 					}
 				} else {
 					printf("parent process only 2 args\n");
-					close(pipefd[0]);
 				}
 			}
  		}
