@@ -85,8 +85,8 @@ int main(int argc, char * argv[]) {
 					printf("2 args error\n");
 					return errno;
 				}
-			} else {
-				/*printf("parent process only 2 args\n");
+			} /*else {
+				printf("parent process only 2 args\n");
 				int ret2 = fork();
 				if (ret2 == -1)
 					printf("error forking");
@@ -99,14 +99,14 @@ int main(int argc, char * argv[]) {
 						printf("2 args error\n");
 						return errno;
 					}
-				} */
+				} 
 				printf("parent process only 2 args\n");
 				int status = 0;
 				int pid = ret;
 				waitpid(pid, &status, 0);
 				printf("%d\n", WEXITSTATUS(status));
 				
-			}
+			}*/
 			
  		}
  	}
