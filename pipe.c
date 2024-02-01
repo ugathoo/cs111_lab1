@@ -73,7 +73,8 @@ int main(int argc, char * argv[]) {
 				return errno;
 			} else if (ret == 0) {
 				dup2(pipefd[1], STDOUT_FILENO); //write to pipefd[1], read from STDOUT_FILENO
-				if (execlp(argv[i+1], argv[i+1], NULL) == -1) {
+				cmd = argv[i+1];
+				if (execlp(cmd, cmd, NULL) == -1) {
 					printf("2 args error\n");
 					return errno;
 				}
