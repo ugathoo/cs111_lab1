@@ -58,6 +58,7 @@ int main(int argc, char *argv[])
 				}
 				else{
 					close(pipefd[0]);
+					wait(NULL);
 				}
 			}
 		}
