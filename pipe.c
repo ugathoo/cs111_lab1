@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
 				return errno;
 			}
 			else if(ret == 0){
-				printf("we are in the child process\n")
+				printf("we are in the child process\n");
 				dup2(pipefd[1], STDOUT_FILENO);
 				close(pipefd[0]);
 				close(pipefd[1]);
