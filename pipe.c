@@ -84,7 +84,7 @@ int main(int argc, char * argv[]) {
 					return errno;
 				}
 			} else {
-				printf("parent process only 2 args\n");
+				printf(string(argv[i]));
 				int status = 0;
 				int pid = ret;
 				waitpid(pid, &status, 0);
