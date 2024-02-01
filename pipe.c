@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 				return errno;
 			}
 			else if(ret == 0){
-				dup2(pipefd[1], STDOUT_FILENO);
+				dup2(pipefd[0], STDOUT_FILENO);
 				if(execlp(argv[p+1], argv[p+1], NULL) == -1){
 					return errno;
 				}
