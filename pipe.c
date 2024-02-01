@@ -65,7 +65,7 @@ int main(int argc, char * argv[]) {
  		int pipectr = argc - 2;
  		
  		for (int i = 0; i < pipectr; i+=1) {
- 			int pipefd[2];
+ 			//int pipefd[2];
 			if (pipe(pipefd) == -1) {
 				printf("error pipe\n");
 				return errno;
@@ -76,8 +76,8 @@ int main(int argc, char * argv[]) {
 				return errno;
 			} else if (ret == 0) {
 				dup2(pipefd[1], STDOUT_FILENO); //write to pipefd[1], read from STDOUT_FILENO
-				//close(pipefd[0]);
-				//close(pipefd[1]);
+				close(pipefd[0]);
+				close(pipefd[1]);
 				int id = i+1;
 				if (execlp(argv[id], argv[id], NULL) == -1) {
 					printf("2 args error\n");
@@ -91,7 +91,27 @@ int main(int argc, char * argv[]) {
 				waitpid(pid, &status, 0);
 				printf("%d\n", WEXITSTATUS(status));
 			}
-			
  		}
+
+		//last arg
+		int ret = fork();
+		if (ret < 0) {
+			printf("error forking\n");
+			return errno;
+		} else if (ret == 0) {
+			dup2(pipefd[0], STDIN_FILENO);
+			close(pipefd[0]);
+			close(pipefd[1]);
+			if (execlp(argv[argc-1], argv[argc-1], NULL) == -1) {
+				printf("2 args error\n");
+				return errno;
+			}
+		} else {
+			int status = 0;
+			int pid = ret;
+			waitpid(pid, &status, 0);
+			printf("%d\n", WEXITSTATUS(status));
+			close(pipefd[0]);
+		}
  	}
 } 
