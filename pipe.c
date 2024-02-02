@@ -93,8 +93,8 @@ int main(int argc, char * argv[]) {
 				close(pipefd[1]); // Close unused write end
 				int pid = ret;
 				int status = 0;
-				int a = waitpid(pid, &status, 0);
-				if (a == -1) {
+				waitpid(pid, &status, 0);
+				if (WIFSIGNALED(status)) {
 					//perror("waitpid error");
 					exit(WTERMSIG(status));
 				}
@@ -121,8 +121,8 @@ int main(int argc, char * argv[]) {
 			close(pipefd[0]);
 			int pid = ret;
 			int status = 0;
-			int a = waitpid(pid, &status, 0);
-			if (a == -1) {
+			waitpid(pid, &status, 0);
+			if (WIFSIGNALED(status)) {
 					//perror("waitpid error");
 				exit(errno);
 			}
