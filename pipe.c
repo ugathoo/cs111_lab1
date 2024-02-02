@@ -88,7 +88,7 @@ int main(int argc, char * argv[]) {
 				}
 				printf("exited\n");
 			} else {
-				/*int status = 0;
+				int status = 0;
 				int pid = ret;
 				waitpid(pid, &status, 0);
 				printf("cleared wait\n");
