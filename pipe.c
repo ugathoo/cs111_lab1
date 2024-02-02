@@ -88,6 +88,9 @@ int main(int argc, char * argv[]) {
 			} else {
 				//dup2(pipefd[0], STDIN_FILENO);
 				close(pipefd[1]); // Close unused write end
+				int pid = ret;
+				int status = 0;
+				waitpid(pid, &status, 0);
 			}
 		}
 		
