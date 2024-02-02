@@ -97,7 +97,7 @@ int main(int argc, char * argv[]) {
 				printf("%d\n", status);
 				if (WIFSIGNALED(status)) {
 					//perror("waitpid error");
-					exit(WTERMSIG(status));
+					exit(WEXITSTATUS(status));
 				}
 
 			}
@@ -125,8 +125,8 @@ int main(int argc, char * argv[]) {
 			waitpid(pid, &status, 0);
 			printf("%d\n", status);
 			if (WIFSIGNALED(status)) {
-					//perror("waitpid error");
-				exit(WTERMSIG(status));
+				//perror("waitpid error");
+				exit(WEXITSTATUS(status));
 			}
 		}
 	}
