@@ -55,7 +55,7 @@ int main(int argc, char * argv[]) {
 				int status = 0;
 				int pid = ret2;
 				int a = waitpid(pid, &status, 0);
-				if(a == -1){
+				if(WIFSIGNALED(status)){
 					//perror("waitpid error");
 					//printf("%d\n", WEXITSTATUS(status));
 					exit(WTERMSIG(status));
