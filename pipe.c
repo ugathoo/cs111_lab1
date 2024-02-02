@@ -85,7 +85,7 @@ int main(int argc, char * argv[]) {
 					exit(errno);
 				}
 			} else {
-				//close(pipefd[1]); 
+				close(pipefd[1]); 
 			}
 		}
 
