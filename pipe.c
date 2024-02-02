@@ -9,7 +9,7 @@
 int main(int argc, char * argv[]) {
  	if (argc == 1) {
  		//printf("invalid number of args\n");
- 		exit(EINVAL);
+ 		exit(22);
 	//only 1 arg
  	} else if (argc == 2) {
  		if (execlp(argv[1], argv[1], NULL) == -1) {
@@ -65,12 +65,13 @@ int main(int argc, char * argv[]) {
  		int pipectr = argc - 2;
 		
 		//printf("before loop\n");
-		if (pipe(pipefd) == -1) {
-			perror("pipe error");
-			return errno;
-		}
+		
 
 		for (int i = 0; i < pipectr; i++) {
+			if (pipe(pipefd) == -1) {
+				perror("pipe error");
+				return errno;
+			}
 			printf("argv i: %s\n", argv[i]);
 			int ret = fork();
 			if (ret < 0) {
