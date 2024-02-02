@@ -96,7 +96,7 @@ int main(int argc, char * argv[]) {
 			perror("fork error");
 			return errno;
 		} else if (ret == 0) {
-			//close(pipefd[1]);
+			close(pipefd[1]);
 			dup2(pipefd[0], STDIN_FILENO);
 			//close(pipefd[0]);
 			printf("%s\n", argv[argc - 1]);
@@ -106,7 +106,7 @@ int main(int argc, char * argv[]) {
 			}
 		} else {
 			close(pipefd[0]);
-			close(pipefd[1]);
+			//close(pipefd[1]);
 			int pid = ret;
 			int status = 0;
 			waitpid(pid, &status, 0); // Wait for the last child process to finish
