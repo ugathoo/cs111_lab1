@@ -71,7 +71,7 @@ int main(int argc, char * argv[]) {
 		}
 
 		for (int i = 0; i < pipectr; i++) {
-			printf("%s\n", argv[i]);
+			printf("argv i: %s\n", argv[i]);
 			int ret = fork();
 			if (ret < 0) {
 				perror("fork error");
@@ -80,7 +80,7 @@ int main(int argc, char * argv[]) {
 				close(pipefd[0]); // Close unused read end
 				dup2(pipefd[1], STDOUT_FILENO);
 				close(pipefd[1]); // Close duplicated write end
-				printf("%s\n", argv[i + 1]);
+				printf("argv i+1: %s\n", argv[i + 1]);
 				if (execlp(argv[i + 1], argv[i + 1], NULL) == -1) {
 					perror("execlp error");
 					exit(errno);
