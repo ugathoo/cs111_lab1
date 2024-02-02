@@ -85,7 +85,7 @@ int main(int argc, char * argv[]) {
 				}
 				dup2(pipefd[0], STDIN_FILENO);
 			} else {
-				close(pipefd[1]); // Close unused write end
+				//close(pipefd[1]); // Close unused write end
 			}
 		}
 		
@@ -106,6 +106,7 @@ int main(int argc, char * argv[]) {
 			}
 		} else {
 			close(pipefd[0]);
+			close(pipefd[1]);
 			int pid = ret;
 			int status = 0;
 			waitpid(pid, &status, 0); // Wait for the last child process to finish
