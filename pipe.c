@@ -108,7 +108,9 @@ int main(int argc, char * argv[]) {
 		} else {
 			close(pipefd[0]);
 			close(pipefd[1]);
-			waitpid(ret, 0, 0); // Wait for child process to finish
+			int pid = ret;
+			int status = 0;
+			waitpid(pid, &status, 0); // Wait for child process to finish
 		}
 	}
 } 
