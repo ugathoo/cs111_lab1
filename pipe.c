@@ -100,7 +100,7 @@ int main(int argc, char * argv[]) {
 			//close(pipefd[1]);
 			dup2(pipefd[0], STDIN_FILENO);
 			//close(pipefd[0]);
-
+			printf("%s\n", argv[argc - 1]);
 			if (execlp(argv[argc - 1], argv[argc - 1], NULL) == -1) {
 				perror("execlp error");
 				exit(errno);
