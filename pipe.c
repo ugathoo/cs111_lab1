@@ -57,9 +57,10 @@ int main(int argc, char * argv[]) {
 				int a = waitpid(pid, &status, 0);
 				if(a == -1){
 					//perror("waitpid error");
+					printf("%d\n", WEXITSTATUS(status));
 					exit(WEXITSTATUS(status));
 				}
-				//printf("%d\n", WEXITSTATUS(status));
+				
  				close(pipefd[0]);
  			}
  		}
