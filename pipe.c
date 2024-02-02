@@ -54,12 +54,13 @@ int main(int argc, char * argv[]) {
  				//printf("parent process only 2 args\n");
 				int status = 0;
 				int pid = ret2;
-				int a = waitpid(pid, &status, 0);
-				if(WIFSIGNALED(status)){
-					//perror("waitpid error");
-					//printf("%d\n", WEXITSTATUS(status));
+				waitpid(pid, &status, 0);
+				if (WIFEXITED(status))	
+					exit(WEXITSTATUS(status));
+				else if (WIFSIGNALED(status))
 					exit(WTERMSIG(status));
-				}
+				else if (WIFSTOPPED(status))	
+					exit(WIFSTOPPED(status));
 				
  				close(pipefd[0]);
  			}
@@ -123,11 +124,13 @@ int main(int argc, char * argv[]) {
 			int pid = ret;
 			int status = 0;
 			waitpid(pid, &status, 0);
-			printf("%d\n", status);
-			if (WIFSIGNALED(status)) {
-				//perror("waitpid error");
+			//printf("%d\n", status);
+			if (WIFEXITED(status))	
 				exit(WEXITSTATUS(status));
-			}
+			else if (WIFSIGNALED(status))
+				exit(WTERMSIG(status));
+			else if (WIFSTOPPED(status))	
+				exit(WIFSTOPPED(status));
 		}
 	}
 	return 0;
