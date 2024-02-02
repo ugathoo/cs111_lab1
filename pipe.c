@@ -65,8 +65,6 @@ int main(int argc, char * argv[]) {
  		int pipectr = argc - 2;
 		
 		//printf("before loop\n");
-		
-
 		for (int i = 0; i < pipectr; i++) {
 			if (pipe(pipefd) == -1) {
 				perror("pipe error");
@@ -84,9 +82,9 @@ int main(int argc, char * argv[]) {
 					perror("execlp error");
 					exit(errno);
 				}
-				dup2(pipefd[0], STDIN_FILENO);
-			} else {
 				//dup2(pipefd[0], STDIN_FILENO);
+			} else {
+				dup2(pipefd[0], STDIN_FILENO);
 				close(pipefd[1]); // Close unused write end
 				int pid = ret;
 				int status = 0;
