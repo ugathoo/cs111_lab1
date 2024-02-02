@@ -71,14 +71,12 @@ int main(int argc, char * argv[]) {
 		}
 
 		for (int i = 0; i < pipectr; i++) {
-			printf("temp\n");
 			
 			int ret = fork();
 			if (ret < 0) {
 				perror("fork error");
 				return errno;
 			} else if (ret == 0) {
-				printf("child process\n");
 				close(pipefd[0]); // Close unused read end
 				dup2(pipefd[1], STDOUT_FILENO);
 				close(pipefd[1]); // Close duplicated write end
@@ -99,11 +97,9 @@ int main(int argc, char * argv[]) {
 			perror("fork error");
 			return errno;
 		} else if (ret == 0) {
-			printf("duped last arg\n");
 			dup2(pipefd[0], STDIN_FILENO);
 			close(pipefd[0]);
 			close(pipefd[1]);
-			printf("%s\n", argv[argc - 1]);
 			
 			if (execlp(argv[argc - 1], argv[argc - 1], NULL) == -1) {
 				perror("execlp error");
@@ -114,8 +110,5 @@ int main(int argc, char * argv[]) {
 			close(pipefd[1]);
 			waitpid(ret, 0, 0); // Wait for child process to finish
 		}
-
-	
-
 	}
 } 
