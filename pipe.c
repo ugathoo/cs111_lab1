@@ -22,19 +22,23 @@ int main(int argc, char * argv[]) {
  		int pipefd[2];
  		if (pipe(pipefd) == -1) {
  			//printf("error pipe\n");
+			exit(errno);
 			return errno;
  		}
  		int ret = fork();
  		if (ret < 0) {
  			//printf("error forking\n");
- 			return errno;
+ 			exit(errno);
+			return errno;
  		} else if (ret == 0) {
  			dup2(pipefd[1], STDOUT_FILENO); 
  			close(pipefd[0]);
  			close(pipefd[1]);
 			if (execlp(argv[1], argv[1], NULL) == -1) {
 				//printf("2 args error\n");
+				exit(errno);
 				return errno;
+				
 			}
  		} else {
  			//printf("parent process only 2 args\n");
@@ -42,6 +46,7 @@ int main(int argc, char * argv[]) {
  			int ret2 = fork();
  			if (ret2 == -1)
  				//printf("error forking");
+				exit(errno);
 				return errno;
  			else if (ret2 == 0) {
  				//printf("parent child process only 2 args\n");
@@ -49,6 +54,7 @@ int main(int argc, char * argv[]) {
  				close(pipefd[0]);
 				if (execlp(argv[2], argv[2], NULL) == -1) {
 					//printf("2 args error\n");
+					exit(errno);
 					return errno;
 				}
 			} else {
@@ -58,6 +64,7 @@ int main(int argc, char * argv[]) {
 				int a = waitpid(pid, &status, 0);
 				if(a == -1){
 					//perror("waitpid error");
+					exit(errno);
 					return errno;
 				}
 				//printf("%d\n", WEXITSTATUS(status));
@@ -73,18 +80,21 @@ int main(int argc, char * argv[]) {
 		for (int i = 0; i < pipectr; i++) {
 			if (pipe(pipefd) == -1) {
 				//perror("pipe error");
+				exit(errno);
 				return errno;
 			}
 			//printf("argv i: %s\n", argv[i]);
 			int ret = fork();
 			if (ret < 0) {
 				perror("fork error");
+				exit(errno);
 				return errno;
 			} else if (ret == 0) {
 				dup2(pipefd[1], STDOUT_FILENO);
 				//printf("argv i+1: %s\n", argv[i + 1]);
 				if (execlp(argv[i + 1], argv[i + 1], NULL) == -1) {
 					perror("execlp error");
+					exit(errno);
 					return errno;
 				}
 				//dup2(pipefd[0], STDIN_FILENO);
@@ -96,6 +106,7 @@ int main(int argc, char * argv[]) {
 				int a = waitpid(pid, &status, 0);
 				if (a == -1) {
 					//perror("waitpid error");
+					exit(errno);
 					return errno;
 				}
 
@@ -107,6 +118,7 @@ int main(int argc, char * argv[]) {
 		int ret = fork();
 		if (ret < 0) {
 			perror("fork error");
+			exit(errno);
 			return errno;
 		} else if (ret == 0) {
 			//close(pipefd[1]);
@@ -115,6 +127,7 @@ int main(int argc, char * argv[]) {
 			//printf("%s\n", argv[argc - 1]);
 			if (execlp(argv[argc - 1], argv[argc - 1], NULL) == -1) {
 				perror("execlp error");
+				exit(errno);
 				return errno;
 			}
 		} else {
@@ -123,7 +136,8 @@ int main(int argc, char * argv[]) {
 			int status = 0;
 			int a = waitpid(pid, &status, 0);
 			if (a == -1) {
-					//perror("waitpid error");
+				//perror("waitpid error");
+				exit(errno);
 				return errno;
 			}
 		}
