@@ -71,13 +71,12 @@ int main(int argc, char * argv[]) {
 		}
 
 		for (int i = 0; i < pipectr; i++) {
-			
 			int ret = fork();
 			if (ret < 0) {
 				perror("fork error");
 				return errno;
 			} else if (ret == 0) {
-				//close(pipefd[0]); 
+				close(pipefd[0]); 
 				dup2(pipefd[1], STDOUT_FILENO);
 				close(pipefd[1]); 
 
@@ -90,7 +89,7 @@ int main(int argc, char * argv[]) {
 			}
 		}
 
-		// Last arg
+		// Last argument
 		int ret = fork();
 		if (ret < 0) {
 			perror("fork error");
@@ -98,7 +97,10 @@ int main(int argc, char * argv[]) {
 		} else if (ret == 0) {
 			dup2(pipefd[0], STDIN_FILENO);
 			close(pipefd[0]);
-			
+
+			// Redirect STDERR to the parent's STDERR
+			dup2(STDERR_FILENO, STDERR_FILENO);
+
 			if (execlp(argv[argc - 1], argv[argc - 1], NULL) == -1) {
 				perror("execlp error");
 				exit(errno);
@@ -107,7 +109,9 @@ int main(int argc, char * argv[]) {
 			close(pipefd[0]);
 			int pid = ret;
 			int status = 0;
-			waitpid(pid, &status, 0); 
+			waitpid(pid, &status, 0); // Wait for the last child process to finish
 		}
+
+ 
 	}
 } 
