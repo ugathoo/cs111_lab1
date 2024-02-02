@@ -76,7 +76,6 @@ int main(int argc, char * argv[]) {
 				perror("fork error");
 				return errno;
 			} else if (ret == 0) {
-				dup2(pipefd[0], STDIN_FILENO);
 				//close(pipefd[0]); 
 				dup2(pipefd[1], STDOUT_FILENO);
 				//close(pipefd[1]); 
@@ -86,8 +85,6 @@ int main(int argc, char * argv[]) {
 					exit(errno);
 				}
 			} else {
-				
-
 				//close(pipefd[1]); 
 			}
 		}
