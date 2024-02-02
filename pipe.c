@@ -112,6 +112,7 @@ int main(int argc, char * argv[]) {
 			return errno;
 		} else if (ret == 0) {
 			dup2(pipefd[0], STDIN_FILENO);
+			dup2(pipefd[1], STDOUT_FILENO);
 			close(pipefd[0]);
 			close(pipefd[1]);
 			//printf("duped last arg\n");
