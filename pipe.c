@@ -94,7 +94,7 @@ int main(int argc, char * argv[]) {
 				int pid = ret;
 				int status = 0;
 				waitpid(pid, &status, 0);
-				if (WIFSIGNALED(status)) {
+				if (!WIFEXITED(status)) {
 					//perror("waitpid error");
 					exit(WTERMSIG(status));
 				}
@@ -122,9 +122,9 @@ int main(int argc, char * argv[]) {
 			int pid = ret;
 			int status = 0;
 			waitpid(pid, &status, 0);
-			if (WIFSIGNALED(status)) {
+			if (!WIFEXITED(status)) {
 					//perror("waitpid error");
-				exit(errno);
+				exit(WTERMSIG(status));
 			}
 		}
 	}
