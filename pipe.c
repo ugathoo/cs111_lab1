@@ -76,9 +76,9 @@ int main(int argc, char * argv[]) {
 				perror("fork error");
 				return errno;
 			} else if (ret == 0) {
-				close(pipefd[0]); 
+				//close(pipefd[0]); 
 				dup2(pipefd[1], STDOUT_FILENO);
-				close(pipefd[1]); 
+				//close(pipefd[1]); 
 
 				if (execlp(argv[i + 1], argv[i + 1], NULL) == -1) {
 					perror("execlp error");
