@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 
 int main(int argc, char * argv[]) {
+	int stat = 0
  	if (argc == 1) {
  		//printf("invalid number of args\n");
  		exit(22);
@@ -14,26 +15,26 @@ int main(int argc, char * argv[]) {
  	} else if (argc == 2) {
  		if (execlp(argv[1], argv[1], NULL) == -1) {
  			//printf("invalid command for one arg\n");
- 			return errno;
+ 			exit(2);
  		}
 	//only 2 args
  	} else if (argc == 3) {
  		int pipefd[2];
  		if (pipe(pipefd) == -1) {
  			//printf("error pipe\n");
-			return errno;
+			exit(errno);
  		}
  		int ret = fork();
  		if (ret < 0) {
  			//printf("error forking\n");
- 			return errno;
+ 			exit(errno);
  		} else if (ret == 0) {
  			dup2(pipefd[1], STDOUT_FILENO); 
  			close(pipefd[0]);
  			close(pipefd[1]);
 			if (execlp(argv[1], argv[1], NULL) == -1) {
 				//printf("2 args error\n");
-				return errno;
+				exit(22);
 			}
  		} else {
  			//printf("parent process only 2 args\n");
@@ -41,14 +42,14 @@ int main(int argc, char * argv[]) {
  			int ret2 = fork();
  			if (ret2 == -1)
  				//printf("error forking");
-				return errno;
+				exit(errno);
  			else if (ret2 == 0) {
  				//printf("parent child process only 2 args\n");
  				dup2(pipefd[0], STDIN_FILENO);
  				close(pipefd[0]);
 				if (execlp(argv[2], argv[2], NULL) == -1) {
 					//printf("2 args error\n");
-					return errno;
+					exit(22);
 				}
 			} else {
  				//printf("parent process only 2 args\n");
@@ -71,20 +72,20 @@ int main(int argc, char * argv[]) {
 		//printf("before loop\n");
 		for (int i = 0; i < pipectr; i++) {
 			if (pipe(pipefd) == -1) {
-				perror("pipe error");
-				return errno;
+				//perror("pipe error");
+				exit(errno);
 			}
 			//printf("argv i: %s\n", argv[i]);
 			int ret = fork();
 			if (ret < 0) {
 				perror("fork error");
-				return errno;
+				exit(errno);
 			} else if (ret == 0) {
 				dup2(pipefd[1], STDOUT_FILENO);
 				//printf("argv i+1: %s\n", argv[i + 1]);
 				if (execlp(argv[i + 1], argv[i + 1], NULL) == -1) {
 					perror("execlp error");
-					exit(errno);
+					exit(22);
 				}
 				//dup2(pipefd[0], STDIN_FILENO);
 			} else {
@@ -114,7 +115,7 @@ int main(int argc, char * argv[]) {
 			//printf("%s\n", argv[argc - 1]);
 			if (execlp(argv[argc - 1], argv[argc - 1], NULL) == -1) {
 				perror("execlp error");
-				exit(errno);
+				exit(22);
 			}
 		} else {
 			close(pipefd[0]);
