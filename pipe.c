@@ -119,7 +119,11 @@ int main(int argc, char * argv[]) {
 			}
 		} else {
 			close(pipefd[0]);
-			
+			int a = waitpid(pid, &status, 0);
+			if (a == -1) {
+					//perror("waitpid error");
+				exit(errno);
+			}
 		}
 	}
 	return 0;
