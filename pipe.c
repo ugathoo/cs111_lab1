@@ -64,32 +64,33 @@ int main(int argc, char * argv[]) {
  		int pipefd[2];
  		int pipectr = argc - 2;
 		
-		printf("before loop\n");
+		//printf("before loop\n");
  		for (int i = 0; i < pipectr; i+=1) {
-			printf("temp\n");
+			//printf("temp\n");
 			if (pipe(pipefd) == -1) {
 				printf("error pipe\n");
 				return errno;
 			}
 			int ret = fork();
-			printf("forked\n");
+			//printf("forked\n");
 			//with the wait, forked prints twice, then hangs on the second iteration after printing child process
 			if (ret < 0) {
 				printf("error forking\n");
 				return errno;
 			} else if (ret == 0) {
-				printf("child process\n");
+				//printf("child process\n");
+				dup2(pipefd[0], STDIN_FILENO);
 				close(pipefd[0]);
 				dup2(pipefd[1], STDOUT_FILENO); //write to pipefd[1], read from STDOUT_FILENO
+				//printf("hit dup2\n"); //with wait this isn't ever printed, hangs @ dup2 call
 				close(pipefd[1]);
-				printf("hit dup2\n"); //with wait this isn't ever printed, hangs @ dup2 call
-				printf("duped\n");
+				//printf("duped\n");
 				int id = i+1;
 				if (execlp(argv[id], argv[id], NULL) == -1) {
 					printf("2 args error\n");
 					return errno;
 				}
-				printf("exited\n");
+				//printf("exited\n");
 			} else {
 				/*int status = 0;
 				int pid = ret;
@@ -97,16 +98,15 @@ int main(int argc, char * argv[]) {
 				printf("cleared wait\n");
 				printf("%d\n", WEXITSTATUS(status));
 				printf("cleared status print\n");*/
-				close(pipefd[1]);
-				wait(NULL);
-				printf("hit after dup2\n");
+				dup2(pipefd[0], STDIN_FILENO);
+				//printf("hit after dup2\n");
 				//if I comment out wait in both places, it passes through all the way to duped last arg, then prints argv[argc-1] and then exits? it doesn't print anything after which i don't understand
 			}
  		}
 
 		//last arg
 		int ret = fork();
-		printf("hit last arg\n");
+		//printf("hit last arg\n");
 		if (ret < 0) {
 			printf("error forking\n");
 			return errno;
@@ -114,20 +114,17 @@ int main(int argc, char * argv[]) {
 			dup2(pipefd[0], STDIN_FILENO);
 			close(pipefd[0]);
 			close(pipefd[1]);
-			printf("duped last arg\n");
+			//printf("duped last arg\n");
 			//close(pipefd[1]);
-			printf("%s\n", argv[argc-1]); //with both waits commented out, this prints, then it exits
+			//printf("%s\n", argv[argc-1]); //with both waits commented out, this prints, then it exits
 			if (execlp(argv[argc-1], argv[argc-1], NULL) == -1) {
 				printf("2 args error\n");
 				exit(errno);
 			}
-			//printf("%d\n", a);
-			printf("exited last arg else if\n");
+			//printf("exited last arg else if\n");
 		} 
 		else {
 			close(pipefd[0]);
-			close(pipefd[1]);
-			wait(NULL);
 			//int status = 0;
 			//int pid = ret;
 			//waitpid(pid, &status, 0);

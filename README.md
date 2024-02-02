@@ -6,7 +6,11 @@ Emulate the pipe operator (|) with this C program.
 
 ## Building
 
-Explain briefly how to build your program
+To build the program, run the following command:
+
+```bash
+make
+```
 
 ## Running
 
