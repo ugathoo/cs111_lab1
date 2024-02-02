@@ -80,10 +80,8 @@ int main(int argc, char * argv[]) {
 			} else if (ret == 0) {
 				printf("child process\n");
 				dup2(pipefd[0], STDIN_FILENO);
-				close(pipefd[0]);
 				dup2(pipefd[1], STDOUT_FILENO); //write to pipefd[1], read from STDOUT_FILENO
 				printf("hit dup2\n"); //with wait this isn't ever printed, hangs @ dup2 call
-				close(pipefd[1]);
 				printf("duped\n");
 				int id = i+1;
 				if (execlp(argv[id], argv[id], NULL) == -1) {
@@ -100,7 +98,6 @@ int main(int argc, char * argv[]) {
 				printf("cleared status print\n");*/
 				dup2(pipefd[0], STDIN_FILENO);
 				printf("hit after dup2\n");
-				//close(pipefd[0]);
 				//if I comment out wait in both places, it passes through all the way to duped last arg, then prints argv[argc-1] and then exits? it doesn't print anything after which i don't understand
 			}
  		}
