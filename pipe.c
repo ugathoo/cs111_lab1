@@ -102,7 +102,6 @@ int main(int argc, char * argv[]) {
 		} else if (ret == 0) {
 			dup2(pipefd[0], STDIN_FILENO);
 			close(pipefd[0]);
-			close(pipefd[1]);
 			
 			if (execlp(argv[argc - 1], argv[argc - 1], NULL) == -1) {
 				perror("execlp error");
@@ -110,7 +109,6 @@ int main(int argc, char * argv[]) {
 			}
 		} else {
 			close(pipefd[0]);
-			close(pipefd[1]);
 			int pid = ret;
 			int status = 0;
 			waitpid(pid, &status, 0); // Wait for child process to finish
