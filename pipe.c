@@ -127,10 +127,10 @@ int main(int argc, char * argv[]) {
 		} 
 		else {
 			close(pipefd[0]);
-			int status = 0;
-			int pid = ret;
-			waitpid(pid, &status, 0);
-			printf("cleared wait last arg\n");
+			//int status = 0;
+			//int pid = ret;
+			//waitpid(pid, &status, 0);
+			//printf("cleared wait last arg\n");
 			//printf("%d\n", WEXITSTATUS(status));
 			
 		}
