@@ -89,7 +89,7 @@ int main(int argc, char * argv[]) {
 				}
 			} else {
 				close(pipefd[1]); // Close unused write end
-				waitpid(ret, 0, 0); // Wait for child process to finish
+				//waitpid(ret, 0, 0); // Wait for child process to finish
 			}
 		}
 
