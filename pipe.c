@@ -54,7 +54,11 @@ int main(int argc, char * argv[]) {
  				//printf("parent process only 2 args\n");
 				int status = 0;
 				int pid = ret2;
-				waitpid(pid, &status, 0);
+				int a = waitpid(pid, &status, 0);
+				if(a == -1){
+					//perror("waitpid error");
+					exit(errno);
+				}
 				//printf("%d\n", WEXITSTATUS(status));
  				close(pipefd[0]);
  			}
@@ -88,7 +92,12 @@ int main(int argc, char * argv[]) {
 				close(pipefd[1]); // Close unused write end
 				int pid = ret;
 				int status = 0;
-				waitpid(pid, &status, 0);
+				int a = waitpid(pid, &status, 0);
+				if (a == -1) {
+					//perror("waitpid error");
+					exit(errno);
+				}
+
 			}
 		}
 		
@@ -97,23 +106,19 @@ int main(int argc, char * argv[]) {
 		int ret = fork();
 		if (ret < 0) {
 			perror("fork error");
-			return errno;
+			exit(errno);
 		} else if (ret == 0) {
 			//close(pipefd[1]);
 			dup2(pipefd[0], STDIN_FILENO);
 			//close(pipefd[0]);
-			printf("%s\n", argv[argc - 1]);
+			//printf("%s\n", argv[argc - 1]);
 			if (execlp(argv[argc - 1], argv[argc - 1], NULL) == -1) {
 				perror("execlp error");
 				exit(errno);
 			}
 		} else {
 			close(pipefd[0]);
-			//close(pipefd[1]);
-			/*int pid = ret;
-			int status = 0;
-			waitpid(pid, &status, 0);*/
-			 // Wait for the last child process to finish
+			
 		}
 	}
 	return 0;
