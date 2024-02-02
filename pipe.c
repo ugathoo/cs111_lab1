@@ -77,24 +77,20 @@ int main(int argc, char * argv[]) {
 				perror("fork error");
 				return errno;
 			} else if (ret == 0) {
-				close(pipefd[0]); // Close unused read end
+				//close(pipefd[0]); 
 				dup2(pipefd[1], STDOUT_FILENO);
-				close(pipefd[1]); // Close duplicated write end
+				close(pipefd[1]); 
 
 				if (execlp(argv[i + 1], argv[i + 1], NULL) == -1) {
 					perror("execlp error");
 					exit(errno);
 				}
 			} else {
-				close(pipefd[1]); // Close unused write end
-				/*int pid = ret;
-				int status = 0;
-				waitpid(pid, &status, 0);*/
-				//waitpid(ret, 0, 0); // Wait for child process to finish
+				close(pipefd[1]); 
 			}
 		}
 
-		// Last argument
+		// Last arg
 		int ret = fork();
 		if (ret < 0) {
 			perror("fork error");
@@ -111,7 +107,7 @@ int main(int argc, char * argv[]) {
 			close(pipefd[0]);
 			int pid = ret;
 			int status = 0;
-			waitpid(pid, &status, 0); // Wait for child process to finish
+			waitpid(pid, &status, 0); 
 		}
 	}
 } 
