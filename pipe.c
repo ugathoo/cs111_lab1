@@ -119,7 +119,7 @@ int main(int argc, char * argv[]) {
 			printf("%s\n", argv[argc-1]); //with both waits commented out, this prints, then it exits
 			if (execlp(argv[argc-1], argv[argc-1], NULL) == -1) {
 				printf("2 args error\n");
-				return errno;
+				exit(errno);
 			}
 			//printf("%d\n", a);
 			printf("exited last arg else if\n");
