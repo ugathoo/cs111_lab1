@@ -116,9 +116,8 @@ int main(int argc, char * argv[]) {
 			close(pipefd[1]);
 			printf("duped last arg\n");
 			//close(pipefd[1]);
-			printf("%s\n", argv[argc-1]);
-			int a = execlp(argv[argc-1], argv[argc-1], NULL);
-			if (a == -1) {
+			printf("%s\n", argv[argc-1]); //with both waits commented out, this prints, then it exits
+			if (execlp(argv[argc-1], argv[argc-1], NULL) == -1) {
 				printf("2 args error\n");
 				return errno;
 			}
