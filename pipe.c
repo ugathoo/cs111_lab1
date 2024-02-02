@@ -86,7 +86,7 @@ int main(int argc, char * argv[]) {
 				
 			} else {
 				dup2(pipefd[0], STDIN_FILENO);
-				//close(pipefd[1]); // Close unused write end
+				close(pipefd[1]); // Close unused write end
 			}
 		}
 		
