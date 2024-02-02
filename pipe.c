@@ -71,6 +71,7 @@ int main(int argc, char * argv[]) {
 		}
 
 		for (int i = 0; i < pipectr; i++) {
+			printf("%s\n", argv[i]);
 			int ret = fork();
 			if (ret < 0) {
 				perror("fork error");
