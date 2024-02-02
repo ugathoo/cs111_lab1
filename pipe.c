@@ -121,7 +121,7 @@ int main(int argc, char * argv[]) {
 				printf("2 args error\n");
 				return errno;
 			}
-			printf("%d\n", a);
+			//printf("%d\n", a);
 			printf("exited last arg else if\n");
 		} 
 		else {
