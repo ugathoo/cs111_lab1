@@ -91,15 +91,15 @@ int main(int argc, char * argv[]) {
 				}
 				printf("exited\n");
 			} else {
-				int status = 0;
+				/*int status = 0;
 				int pid = ret;
 				waitpid(pid, &status, 0);
 				printf("cleared wait\n");
 				printf("%d\n", WEXITSTATUS(status));
-				printf("cleared status print\n");
+				printf("cleared status print\n");*/
 				dup2(pipefd[0], STDIN_FILENO);
 				printf("hit after dup2\n");
-				//close(pipefd[0]);*/
+				//close(pipefd[0]);
 				//if I comment out wait, it passes through all the way to duped last arg, then hangs
 			}
  		}
@@ -127,10 +127,10 @@ int main(int argc, char * argv[]) {
 		} 
 		else {
 			close(pipefd[0]);
-			int status = 0;
+			/*int status = 0;
 			int pid = ret;
 			waitpid(pid, &status, 0);
-			printf("cleared wait last arg\n");
+			printf("cleared wait last arg\n");*/
 			//printf("%d\n", WEXITSTATUS(status));
 			
 		}
