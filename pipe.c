@@ -76,14 +76,23 @@ int main(int argc, char * argv[]) {
 				perror("fork error");
 				return errno;
 			} else if (ret == 0) {
-				//close(pipefd[0]); 
-				dup2(pipefd[1], STDOUT_FILENO);
-				//close(pipefd[1]); 
+				if (i < pipectr - 1) {
+					close(pipefd[0]); // Close unused read end
+					dup2(pipefd[1], STDOUT_FILENO);
+					close(pipefd[1]); // Close duplicated write end
+            	}
+
+				if (i > 0) {
+					close(pipefd[1]); // Close unused write end
+					dup2(pipefd[0], STDIN_FILENO);
+					close(pipefd[0]); // Close duplicated read end
+				}
 
 				if (execlp(argv[i + 1], argv[i + 1], NULL) == -1) {
 					perror("execlp error");
 					exit(errno);
 				}
+				
 			} else {
 				close(pipefd[1]); 
 			}
