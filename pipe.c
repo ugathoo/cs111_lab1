@@ -85,6 +85,7 @@ int main(int argc, char * argv[]) {
 					perror("execlp error");
 					exit(errno);
 				}
+				dup2(pipefd[0, STDIN_FILENO]);
 			} else {
 				close(pipefd[1]); // Close unused write end
 			}
