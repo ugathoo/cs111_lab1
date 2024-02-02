@@ -110,7 +110,7 @@ int main(int argc, char * argv[]) {
 			dup2(pipefd[0], STDIN_FILENO);
 			printf("duped last arg\n");
 			//close(pipefd[1]);
-			printf("%s\n", argv[argc-1])
+			printf("%s\n", argv[argc-1]);
 			int a = execlp(argv[argc-1], argv[argc-1], NULL);
 			if (a == -1) {
 				printf("2 args error\n");
