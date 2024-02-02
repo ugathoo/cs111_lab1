@@ -34,7 +34,7 @@ int main(int argc, char * argv[]) {
  			close(pipefd[1]);
 			if (execlp(argv[1], argv[1], NULL) == -1) {
 				//printf("2 args error\n");
-				exit(22);
+				exit(errno);
 			}
  		} else {
  			//printf("parent process only 2 args\n");
@@ -49,7 +49,7 @@ int main(int argc, char * argv[]) {
  				close(pipefd[0]);
 				if (execlp(argv[2], argv[2], NULL) == -1) {
 					//printf("2 args error\n");
-					exit(22);
+					exit(errno);
 				}
 			} else {
  				//printf("parent process only 2 args\n");
@@ -85,7 +85,7 @@ int main(int argc, char * argv[]) {
 				//printf("argv i+1: %s\n", argv[i + 1]);
 				if (execlp(argv[i + 1], argv[i + 1], NULL) == -1) {
 					perror("execlp error");
-					exit(22);
+					exit(errno);
 				}
 				//dup2(pipefd[0], STDIN_FILENO);
 			} else {
@@ -115,7 +115,7 @@ int main(int argc, char * argv[]) {
 			//printf("%s\n", argv[argc - 1]);
 			if (execlp(argv[argc - 1], argv[argc - 1], NULL) == -1) {
 				perror("execlp error");
-				exit(22);
+				exit(errno);
 			}
 		} else {
 			close(pipefd[0]);
