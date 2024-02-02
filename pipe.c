@@ -95,11 +95,9 @@ int main(int argc, char * argv[]) {
 			perror("fork error");
 			return errno;
 		} else if (ret == 0) {
+			close(pipefd[1]);
 			dup2(pipefd[0], STDIN_FILENO);
 			close(pipefd[0]);
-
-			// Redirect STDERR to the parent's STDERR
-			dup2(STDERR_FILENO, STDERR_FILENO);
 
 			if (execlp(argv[argc - 1], argv[argc - 1], NULL) == -1) {
 				perror("execlp error");
